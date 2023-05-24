@@ -24,11 +24,10 @@ Note: The installation process can take a while as the installer will need to do
 
 ### Dependencies
 
-The simulation uses PyBullet for the physics simulation and csv for data recording. You can install them using pip:
+The simulation uses PyBullet for the physics simulation. You can install them using pip:
 
 ```
 pip install pybullet
-pip install csv
 ```
 
 ### URDF Files
