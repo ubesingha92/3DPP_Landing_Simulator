@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot name="x_shape">
+  <!-- Link for first part of 'X' -->
+  <link name="part1">
+    <inertial>
+      <mass value="1.0" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      <!-- <inertia ixx="0.05" ixy="0.0" ixz="0.0" iyy="0.05" iyz="0.0" izz="0.05" /> -->
+    </inertial>
+    <collision>
+      <geometry>
+        <box size="8 0.05 0.05" />
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <box size="8 0.05 0.05" />
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- Link for second part of 'X' -->
+  <link name="part2">
+    <inertial>
+      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <mass value="1.0" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      <!-- <inertia ixx="0.05" ixy="0.0" ixz="0.0" iyy="0.05" iyz="0.0" izz="0.05" /> -->
+    </inertial>
+    <collision>
+      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <geometry>
+        <box size="8 0.05 0.05" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <geometry>
+        <box size="8 0.05 0.05" />
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint to connect the two parts -->
+  <joint name="x_joint" type="fixed">
+    <parent link="part1" />
+    <child link="part2" />
+    <origin xyz="0 0 0" />
+  </joint>
+</robot>
