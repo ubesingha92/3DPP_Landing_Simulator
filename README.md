@@ -36,7 +36,8 @@ Simply navigate to the directory where the script is located and run the script 
 ```
 python simulator.py
 ```
-![UI](https://github.com/ubesingha92/3DPP_Landing_Simulator/assets/126043311/0040368e-7b2e-4da0-9b7e-d7354cffcb54)
+![land interface](https://github.com/ubesingha92/3DPP_Landing_Simulator/assets/126043311/8edc58be-abf6-4e4c-bf80-a30821298fe2)
+
 
 The simulation will then run until you manually stop it.
 
