@@ -12,14 +12,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 - **Microsoft Visual C++ 14.0:** This is required to build certain Python packages. For Windows users, download and install "Build Tools for Visual Studio 2019" from [Microsoft's official site](https://visualstudio.microsoft.com/downloads/). 
 
-   In the installer, select the "C++ build tools" box, and ensure the features listed below are checked:
-
-   - MSVC v142 - VS 2019 C++ x64/x86 build tools (v14.16)
-   - Windows 10 SDK (10.0.17763.0)
-   - C++ CMake tools for Windows
-   - Testing tools core features - Build Tools
-   - C++ AddressSanitizer (Experimental)
-
 Note: The installation process can take a while as the installer will need to download more than 1 GB of additional files.
 
 ### Dependencies
@@ -34,7 +26,6 @@ pip install pybullet
 
 The project uses URDF (Unified Robot Description Format) files to describe the 3D shapes used in the simulation. Make sure the following URDF files are in your project directory:
 
-- "urdf/plane.urdf"
 - "urdf/v_shape.urdf"
 - "urdf/x_shape.urdf"
 

@@ -1,13 +1,38 @@
 <?xml version="1.0"?>
 <robot name="x_shape">
+  <!-- Link for body -->
+  <link name="part0">
+    <inertial>
+      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <mass value="80" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="2.5" ixy="0.0" ixz="0.0" iyy="2.8" iyz="0.0" izz="5.2" />
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <geometry>
+        <box size="0.98 0.92 0.41" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <geometry>
+        <box size="0.98 0.92 0.41" />
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+
   <!-- Link for first part of 'X' -->
   <link name="part1">
     <inertial>
-      <mass value="1.0" />
+      <mass value="10" />
       <origin xyz="0 0 0" />
-      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
-      <!-- <inertia ixx="0.05" ixy="0.0" ixz="0.0" iyy="0.05" iyz="0.0" izz="0.05" /> -->
+      <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="26" iyz="0.0" izz="26" />
     </inertial>
+
     <collision>
       <geometry>
         <box size="8 0.05 0.05" />
@@ -27,10 +52,9 @@
   <link name="part2">
     <inertial>
       <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
-      <mass value="1.0" />
+      <mass value="10" />
       <origin xyz="0 0 0" />
-      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
-      <!-- <inertia ixx="0.05" ixy="0.0" ixz="0.0" iyy="0.05" iyz="0.0" izz="0.05" /> -->
+      <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="26" iyz="0.0" izz="26" />
     </inertial>
     <collision>
       <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
@@ -43,16 +67,22 @@
       <geometry>
         <box size="8 0.05 0.05" />
       </geometry>
-      <material name="blue">
-        <color rgba="0 0 1 1" />
+      <material name="red">
+        <color rgba="1 0 0 1" />
       </material>
     </visual>
   </link>
 
   <!-- Joint to connect the two parts -->
-  <joint name="x_joint" type="fixed">
-    <parent link="part1" />
-    <child link="part2" />
-    <origin xyz="0 0 0" />
+  <joint name="x_joint1" type="fixed">
+    <parent link="part0" />
+    <child link="part1" />
+    <origin xyz="0 0 -.22" />
   </joint>
+  <joint name="x_joint2" type="fixed">
+    <parent link="part0" />
+    <child link="part2" />
+    <origin xyz="0 0 -.22" />
+  </joint>
+
 </robot>
