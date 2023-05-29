@@ -8,10 +8,10 @@ import numpy as np
 base_sizes= [4, 5, 6, 7, 8]
 
 # Checking angle (degree)
-angles = [45, 60, 75]
+angles = [30, 45, 60, 75]
 
 # Checking grid spacing (m)
-resolution = 1
+resolution = .25
 
 # gravity
 g = 9.80
