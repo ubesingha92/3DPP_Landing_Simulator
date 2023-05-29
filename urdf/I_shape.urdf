@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot name="I_shape">
+  <!-- Link 1 -->
+  <link name="link1">
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.025 0.025 -25" rpy="0 0 0" />  <!-- Modified origin position -->
+      <geometry>
+        <box size="0.05 0.05 50" />
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.025 0.025 -25" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 50" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

@@ -2,103 +2,147 @@ import csv
 import time
 import pybullet as p
 import pybullet_data
+import numpy as np
 
-# Half the size of the landing pad
-p_size = 1.5
+# Checking base sizes (m)
+base_sizes= [4, 5, 6, 7, 8]
 
-# Half the size of the testing area
-x_start = -2.6
-y_start = -2.6
-z_start = 3
-x = x_start
-y = y_start
-z = z_start
+# Checking angle (degree)
+angles = [45, 60, 75]
 
-attempt = 0 # attempt number
-massage = ''
-t_sleep = 0.01
-l_count = 0.0 # loop count in a single attempt
+# Checking grid spacing (m)
+resolution = 1
 
-p_update = 0.2
+# gravity
+g = 9.80
 
-# connect to the physics simulation
+# Drone height 
+d_height = 0.41
+
+# Drop height
+drop_h = d_height + max(base_sizes)/(2*np.tan(np.radians(min(angles))))
+
+# Sleep time (s)
+t_sleep = .01
+
+# Connect to the physics simulation
 p.connect(p.GUI)
 # Collect PyBullet default data path.
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-# enable real-time simulation and set gravity
+# Enable real-time simulation and set gravity
 p.setRealTimeSimulation(1)
-p.setGravity(0, 0, -10)
+# Set gravity (m/s²)
+p.setGravity(0, 0, -g)
 
-# load objects
+# Load objects
 planeId = p.loadURDF("plane.urdf")
 
-vshape_side1 = p.loadURDF("urdf/v_shape.urdf", [p_size, p_size, 0], p.getQuaternionFromEuler([0, 0, 0.785398]))
-vshape_side1 = p.loadURDF("urdf/v_shape.urdf", [p_size, -p_size, 0], p.getQuaternionFromEuler([0, 0, 2.35619]))
-vshape_side1 = p.loadURDF("urdf/v_shape.urdf", [-p_size, p_size, 0], p.getQuaternionFromEuler([0, 0, 2.35619]))
-vshape_side1 = p.loadURDF("urdf/v_shape.urdf", [-p_size, -p_size, 0], p.getQuaternionFromEuler([0, 0, 0.785398]))
+# Base
+shape_side1_p1 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+shape_side1_p2 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
 
-xshape = p.loadURDF("urdf/x_shape.urdf", [x, y, z], p.getQuaternionFromEuler([0, 0, 0]))
+shape_side2_p1 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+shape_side2_p2 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
 
-# Create a CSV file Success Attempt Record
-file = open('xshape_success.csv', 'w', newline='')
-writer_s = csv.writer(file)
+shape_side3_p1 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+shape_side3_p2 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
 
-# Create a CSV file Attempt Number, Position, and Orientation Values
-file = open('xshape_position_orientation.csv', 'w', newline='')
-writer_op = csv.writer(file)
+shape_side4_p1 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+shape_side4_p2 = p.loadURDF("urdf/I_shape.urdf", [0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
 
-# Header: Attempt Number, Position, and Orientation Values
-writer_op.writerow(["Attempt", "time(s)", "PosX", "PosY", "PosZ","OrnX", "OrnY", "OrnZ", "OrnW"])
+# Drone
+drone = p.loadURDF("urdf/drone.urdf", [0, 0, 1], p.getQuaternionFromEuler([0, 0, 0]))
 
-# Header: Success Attempt Record
-writer_s.writerow(["Attempt", "StartX", "StartY", "StartZ", "time(s)", "Massage"])
+for base_size in base_sizes:
 
-try:
-    while True:
-        pos, orn = p.getBasePositionAndOrientation(xshape)
-        linear_vel, angular_vel = p.getBaseVelocity(xshape)
+    for angle in angles:
 
-        # Write the attempt number and position and orientation values into the CSV file
-        writer_op.writerow([attempt] + [l_count * t_sleep] + [round(val, 2) for val in list(pos) + list(orn)])
+        radian = np.radians(angle)
+        # Calculate base height
+        base_height = base_size/(2*np.tan(radian))
 
-        # check if both linear and angular velocity are close to zero
-        if max(abs(v) for v in linear_vel) < 0.01 and max(abs(v) for v in angular_vel) < 0.01:
+        # Calculate grid size
+        x_start = -(base_size/2)
+        y_start = -(base_size/2)
+        
+        x_end = (base_size/2)
+        y_end = (base_size/2)
 
-            # Check if the object's position values are also close to zero
-            if max(abs(val) for val in list(pos)) < 0.4:
-                print('OK')
-                massage = 'OK'
+        x = x_start
+        y = y_start
+
+        # How much time does it take for the drone to land
+        l_time =0
+        # Initialize loop count
+        l_count = 0
+
+        # Base Position
+        p.resetBasePositionAndOrientation(shape_side1_p1, [base_size/2, base_size/2, base_height], p.getQuaternionFromEuler([-radian, 0, 0]))
+        p.resetBasePositionAndOrientation(shape_side1_p2, [base_size/2, base_size/2, base_height], p.getQuaternionFromEuler([0, radian, 0]))
+
+        p.resetBasePositionAndOrientation(shape_side2_p1, [base_size/2, -base_size/2, base_height], p.getQuaternionFromEuler([radian, 0, 0]))
+        p.resetBasePositionAndOrientation(shape_side2_p2, [base_size/2, -base_size/2, base_height], p.getQuaternionFromEuler([0, radian, 0]))
+
+        p.resetBasePositionAndOrientation(shape_side3_p1, [-base_size/2, base_size/2, base_height], p.getQuaternionFromEuler([-radian, 0, 0]))
+        p.resetBasePositionAndOrientation(shape_side3_p2, [-base_size/2, base_size/2, base_height], p.getQuaternionFromEuler([0, -radian, 0]))
+
+        p.resetBasePositionAndOrientation(shape_side4_p1, [-base_size/2, -base_size/2, base_height], p.getQuaternionFromEuler([radian, 0, 0]))
+        p.resetBasePositionAndOrientation(shape_side4_p2, [-base_size/2, -base_size/2, base_height], p.getQuaternionFromEuler([0, -radian, 0]))
+        
+        time.sleep(1)
+        p.resetBasePositionAndOrientation(drone, [x, y, drop_h], p.getQuaternionFromEuler([0, 0, 0.785398]))
+        
+        # Create a CSV file Success Attempt Record
+        file_name = f"xshape_success_base_{base_size}_angle_{angle}.csv"
+        file = open(file_name, 'w', newline='')
+
+        writer_s = csv.writer(file)
+
+        # Header: Success Attempt Record
+        writer_s.writerow(["StartX", "StartY", "Time (s)", "Result"])
+                
+        while x <= x_end and y <= y_end:
+
+            pos, orn = p.getBasePositionAndOrientation(drone)
+            linear_vel, angular_vel = p.getBaseVelocity(drone)
+
+            # check if both linear and angular velocity are close to zero
+            if max(abs(v) for v in linear_vel) < 0.001 and max(abs(v) for v in angular_vel) < 0.001:
+
+                # Check if the x and y position values are close to zero
+                if max(abs(val) for val in list(pos[:2])) < 0.1:
+                    Result = 'Successful'
+                    l_time = l_count * t_sleep
+                else:
+                    Result = 'Unsuccessful'
+                    l_time = l_count * t_sleep
+                
+                # update x, y position
+                print("Base size:", base_size, " Angle:", angle," X:", round(x, 2), " Y:", round(y, 2), " Result:", Result)
+
+                # Write the successful attempt record into the CSV file.
+                writer_s.writerow([ round(x, 2)] + [round(y, 2)] + [l_time] + [Result])
+                
+                # if it is stable, move it to (x,y,Drop height)
+                p.resetBasePositionAndOrientation(drone, [x, y, drop_h], p.getQuaternionFromEuler([0, 0, 0.785398]))
+                
+                l_count = 0 # loop count reset
+
+                # update x, y position
+                # print("Base size:", base_size, " Angle:", angle," X:", round(x, 2), " Y:", round(y, 2), " Result:", Result)
+
+                if (x >= x_end):
+                    x = x_start
+                    y += resolution
+                else:
+                    x += resolution
             else:
-                print('NG')
-                massage = 'NG'
+                l_count += 1
 
-            # Write the successful attempt record into the CSV file.
-            writer_s.writerow([attempt] + [x] + [y] + [z] + [l_count * t_sleep] + [massage])
-            
-            # if it is stable, move it to (x,y,3)
-            p.resetBasePositionAndOrientation(xshape, [x, y, 3], p.getQuaternionFromEuler([0, 0, 0]))
-            
-            attempt += 1 # update attempt count
-            l_count = 0 # loop count reset
+            time.sleep(t_sleep)
+        # close file
+        file.close()
 
-            # update x, y position
-            print(attempt, round(x, 2), round(y, 2))
-            if (x > -x_start):
-                x = x_start
-                y += p_update
-            else:
-                x += p_update
-            if (y > -y_start):
-                break
-
-        l_count += 1
-        time.sleep(t_sleep)
-
-    print("Stopping the simulation...")
-    p.disconnect()
-    file.close()
-except KeyboardInterrupt:
-    print("Stopping the simulation...")
-    p.disconnect()
-    file.close()
+print("Stopping the simulation...")
+p.disconnect()

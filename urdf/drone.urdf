@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="x_shape">
   <!-- Link for body -->
-  <link name="part0">
+  <link name="link1">
     <inertial>
       <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
       <mass value="80" />
@@ -26,7 +26,7 @@
   </link>
 
   <!-- Link for first part of 'X' -->
-  <link name="part1">
+  <link name="link2">
     <inertial>
       <mass value="10" />
       <origin xyz="0 0 0" />
@@ -49,7 +49,7 @@
   </link>
 
   <!-- Link for second part of 'X' -->
-  <link name="part2">
+  <link name="link3">
     <inertial>
       <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
       <mass value="10" />
@@ -75,14 +75,14 @@
 
   <!-- Joint to connect the two parts -->
   <joint name="x_joint1" type="fixed">
-    <parent link="part0" />
-    <child link="part1" />
-    <origin xyz="0 0 -.22" />
+    <parent link="link1" />
+    <child link="link2" />
+    <origin xyz="0 0 -.20" />
   </joint>
   <joint name="x_joint2" type="fixed">
-    <parent link="part0" />
-    <child link="part2" />
-    <origin xyz="0 0 -.22" />
+    <parent link="link1" />
+    <child link="link3" />
+    <origin xyz="0 0 -.20" />
   </joint>
 
 </robot>
