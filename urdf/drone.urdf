@@ -1,87 +1,126 @@
 <?xml version="1.0"?>
 <robot name="x_shape">
-  <!-- Link for body -->
+  <!-- Main body link of the robot -->
   <link name="link1">
     <inertial>
-      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <!-- Orientation of the inertial frame, rotated 45 degrees around Z-axis -->
+      <origin rpy="0 0 0.785398" /> 
+      <!-- Mass of the body link -->
       <mass value="80" />
+      <!-- Origin of the inertial frame -->
       <origin xyz="0 0 0" />
-      <inertia ixx="2.5" ixy="0.0" ixz="0.0" iyy="2.8" iyz="0.0" izz="5.2" />
+      <!-- Inertia values of the body link -->
+      <inertia ixx="2.93333333" ixy="0" ixz="0" iyy="2.93333333" iyz="0" izz="13.33333333" />
     </inertial>
+    <!-- Collision properties of the body link -->
     <collision>
-      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <!-- Orientation of the collision frame, rotated 45 degrees around Z-axis -->
+      <origin rpy="0 0 0.785398" /> 
+      <!-- Geometry of the body link for collision -->
       <geometry>
-        <box size="0.98 0.92 0.41" />
+        <box size="1 1 0.4" />
       </geometry>
     </collision>
+    <!-- Visual properties of the body link -->
     <visual>
-      <origin rpy="0 0 0.785398" /> <!-- Rotate by 45 degrees around Z-axis -->
+      <!-- Orientation of the visual frame, rotated 45 degrees around Z-axis -->
+      <origin rpy="0 0 0.785398" /> 
+      <!-- Geometry of the body link for visualization -->
       <geometry>
-        <box size="0.98 0.92 0.41" />
+        <box size="1 1 0.4" />
       </geometry>
+      <!-- Material properties for visualization -->
       <material name="blue">
         <color rgba="0 0 1 1" />
       </material>
     </visual>
   </link>
 
-  <!-- Link for first part of 'X' -->
+  <!-- First arm of 'X' -->
   <link name="link2">
+    <!-- Inertial properties of the first arm -->
     <inertial>
+      <!-- Mass of the first arm -->
       <mass value="10" />
+      <!-- Origin of the inertial frame -->
       <origin xyz="0 0 0" />
-      <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="26" iyz="0.0" izz="26" />
+      <!-- Inertia values of the first arm -->
+      <inertia ixx="0.02083333" ixy="0" ixz="0" iyy="26.67083333" iyz="0" izz="26.67083333" />
     </inertial>
-
+    <!-- Collision properties of the first arm -->
     <collision>
+      <!-- Geometry of the first arm for collision -->
       <geometry>
         <box size="8 0.05 0.05" />
       </geometry>
     </collision>
+    <!-- Visual properties of the first arm -->
     <visual>
+      <!-- Geometry of the first arm for visualization -->
       <geometry>
         <box size="8 0.05 0.05" />
       </geometry>
+      <!-- Material properties for visualization -->
       <material name="red">
         <color rgba="1 0 0 1" />
       </material>
     </visual>
   </link>
 
-  <!-- Link for second part of 'X' -->
+  <!-- Second arm of 'X' -->
   <link name="link3">
+    <!-- Inertial properties of the second arm -->
     <inertial>
-      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <!-- Orientation of the inertial frame, rotated 90 degrees around Z-axis -->
+      <origin rpy="0 0 1.5708" />
+      <!-- Mass of the second arm -->
       <mass value="10" />
+      <!-- Origin of the inertial frame -->
       <origin xyz="0 0 0" />
-      <inertia ixx="0.005" ixy="0.0" ixz="0.0" iyy="26" iyz="0.0" izz="26" />
+      <!-- Inertia values of the second arm -->
+      <inertia ixx="0.02083333" ixy="0" ixz="0" iyy="26.67083333" iyz="0" izz="26.67083333" />
     </inertial>
+    <!-- Collision properties of the second arm -->
     <collision>
-      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <!-- Orientation of the collision frame, rotated 90 degrees around Z-axis -->
+      <origin rpy="0 0 1.5708" />
+      <!-- Geometry of the second arm for collision -->
       <geometry>
         <box size="8 0.05 0.05" />
       </geometry>
     </collision>
+    <!-- Visual properties of the second arm -->
     <visual>
-      <origin rpy="0 0 1.5708" /> <!-- Rotate by 90 degrees around Z-axis -->
+      <!-- Orientation of the visual frame, rotated 90 degrees around Z-axis -->
+      <origin rpy="0 0 1.5708" />
+      <!-- Geometry of the second arm for visualization -->
       <geometry>
         <box size="8 0.05 0.05" />
       </geometry>
+      <!-- Material properties for visualization -->
       <material name="red">
         <color rgba="1 0 0 1" />
       </material>
     </visual>
   </link>
 
-  <!-- Joint to connect the two parts -->
+  <!-- Joint to connect the body to the first arm -->
   <joint name="x_joint1" type="fixed">
+    <!-- Parent link of the joint -->
     <parent link="link1" />
+    <!-- Child link of the joint -->
     <child link="link2" />
+    <!-- Origin of the joint -->
     <origin xyz="0 0 -.20" />
   </joint>
+
+  <!-- Joint to connect the body to the second arm -->
   <joint name="x_joint2" type="fixed">
+    <!-- Parent link of the joint -->
     <parent link="link1" />
+    <!-- Child link of the joint -->
     <child link="link3" />
+    <!-- Origin of the joint -->
     <origin xyz="0 0 -.20" />
   </joint>
 
