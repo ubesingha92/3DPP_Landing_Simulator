@@ -1,0 +1,7 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Simulation output files
+*.csv
+*.png

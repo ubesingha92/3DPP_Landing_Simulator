@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<robot name="x_shape">
+  <!-- Main body link of the drone (Generic X-Shape) -->
+  <link name="link1">
+    <inertial>
+      <!-- Origin of the inertial frame, yawed 45 degrees anticlockwise -->
+      <origin xyz="0 0 0" rpy="0 0 0.785398" />
+      <!-- Mass of the body link -->
+      <mass value="0.06" />
+      <!-- Inertia values for box 0.078 x 0.04 x 0.025 m at 0.06 kg -->
+      <inertia ixx="0.0000111" ixy="0" ixz="0" iyy="0.0000335" iyz="0" izz="0.0000384" />
+    </inertial>
+    <!-- Collision properties of the body link -->
+    <collision>
+      <!-- Orientation of the collision frame, yawed 45 degrees anticlockwise -->
+      <origin rpy="0 0 0.785398" /> 
+      <!-- Geometry: 78mm x 40mm x 25mm -->
+      <geometry>
+        <box size="0.078 0.04 0.025" />
+      </geometry>
+    </collision>
+    <!-- Visual properties of the body link -->
+    <visual>
+      <!-- Orientation of the visual frame, yawed 45 degrees anticlockwise -->
+      <origin rpy="0 0 0.785398" /> 
+      <!-- Geometry: 78mm x 40mm x 25mm -->
+      <geometry>
+        <box size="0.078 0.04 0.025" />
+      </geometry>
+      <!-- Material properties for visualization -->
+      <material name="body_blue">
+        <color rgba="0 0.447 0.698 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- Propeller links. Each cylinder represents one propeller. -->
+  <link name="propeller_front_right">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.0000001569" ixy="0" ixz="0" iyy="0.0000001569" iyz="0" izz="0.0000003125" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+      <material name="propeller_green">
+        <color rgba="0 0.62 0.451 1" />
+      </material>
+    </visual>
+  </link>
+
+  <link name="propeller_front_left">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.0000001569" ixy="0" ixz="0" iyy="0.0000001569" iyz="0" izz="0.0000003125" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+      <material name="propeller_green">
+        <color rgba="0 0.62 0.451 1" />
+      </material>
+    </visual>
+  </link>
+
+  <link name="propeller_rear_left">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.0000001569" ixy="0" ixz="0" iyy="0.0000001569" iyz="0" izz="0.0000003125" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+      <material name="propeller_green">
+        <color rgba="0 0.62 0.451 1" />
+      </material>
+    </visual>
+  </link>
+
+  <link name="propeller_rear_right">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.0000001569" ixy="0" ixz="0" iyy="0.0000001569" iyz="0" izz="0.0000003125" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.025" length="0.003" />
+      </geometry>
+      <material name="propeller_green">
+        <color rgba="0 0.62 0.451 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- First arm of 'X' (landing leg) -->
+  <link name="link2">
+    <!-- Inertial properties of the first arm -->
+    <inertial>
+      <!-- Mass of the first arm (10g) -->
+      <mass value="0.01" />
+      <!-- Origin of the inertial frame, yawed 45 degrees anticlockwise -->
+      <origin xyz="0 0 0" rpy="0 0 0.785398" />
+      <!-- Inertia values for box 0.600 x 0.002 x 0.002 m at 0.01 kg -->
+      <inertia ixx="0.0000000067" ixy="0" ixz="0" iyy="0.0003000" iyz="0" izz="0.0003000" />
+    </inertial>
+    <!-- Collision properties of the first arm -->
+    <collision>
+      <!-- Geometry: 600mm x 2mm x 2mm -->
+      <origin rpy="0 0 0.785398" />
+      <geometry>
+        <box size="0.600 0.002 0.002" />
+      </geometry>
+    </collision>
+    <!-- Visual properties of the first arm -->
+    <visual>
+      <!-- Geometry: 600mm x 2mm x 2mm -->
+      <origin rpy="0 0 0.785398" />
+      <geometry>
+        <box size="0.600 0.002 0.002" />
+      </geometry>
+      <!-- Material properties for visualization -->
+      <material name="leg_vermillion">
+        <color rgba="0.835 0.369 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- Second arm of 'X' (landing leg, perpendicular) -->
+  <link name="link3">
+    <!-- Inertial properties of the second arm -->
+    <inertial>
+      <!-- Origin and orientation of the inertial frame, yawed 135 degrees anticlockwise -->
+      <origin xyz="0 0 0" rpy="0 0 2.356194" />
+      <!-- Mass of the second arm (10g) -->
+      <mass value="0.01" />
+      <!-- Inertia values for box 0.600 x 0.002 x 0.002 m at 0.01 kg -->
+      <inertia ixx="0.0000000067" ixy="0" ixz="0" iyy="0.0003000" iyz="0" izz="0.0003000" />
+    </inertial>
+    <!-- Collision properties of the second arm -->
+    <collision>
+      <!-- Orientation of the collision frame, yawed 135 degrees anticlockwise -->
+      <origin rpy="0 0 2.356194" />
+      <!-- Geometry: 600mm x 2mm x 2mm -->
+      <geometry>
+        <box size="0.600 0.002 0.002" />
+      </geometry>
+    </collision>
+    <!-- Visual properties of the second arm -->
+    <visual>
+      <!-- Orientation of the visual frame, yawed 135 degrees anticlockwise -->
+      <origin rpy="0 0 2.356194" />
+      <!-- Geometry: 600mm x 2mm x 2mm -->
+      <geometry>
+        <box size="0.600 0.002 0.002" />
+      </geometry>
+      <!-- Material properties for visualization -->
+      <material name="leg_vermillion">
+        <color rgba="0.835 0.369 0 1" />
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint to connect the body to the first arm -->
+  <joint name="x_joint1" type="fixed">
+    <!-- Parent link of the joint -->
+    <parent link="link1" />
+    <!-- Child link of the joint -->
+    <child link="link2" />
+    <!-- Origin: arms are at the bottom of the body -->
+    <origin xyz="0 0 -0.0135" />
+  </joint>
+
+  <!-- Joint to connect the body to the second arm -->
+  <joint name="x_joint2" type="fixed">
+    <!-- Parent link of the joint -->
+    <parent link="link1" />
+    <!-- Child link of the joint -->
+    <child link="link3" />
+    <!-- Origin: arms are at the bottom of the body -->
+    <origin xyz="0 0 -0.0135" />
+  </joint>
+
+  <!-- Fixed joints to attach the propellers to the body. -->
+  <joint name="propeller_front_right_joint" type="fixed">
+    <parent link="link1" />
+    <child link="propeller_front_right" />
+    <origin xyz="0.050 0.050 -0.009" rpy="0 0 0" />
+  </joint>
+
+  <joint name="propeller_front_left_joint" type="fixed">
+    <parent link="link1" />
+    <child link="propeller_front_left" />
+    <origin xyz="-0.050 0.050 -0.009" rpy="0 0 0" />
+  </joint>
+
+  <joint name="propeller_rear_left_joint" type="fixed">
+    <parent link="link1" />
+    <child link="propeller_rear_left" />
+    <origin xyz="-0.050 -0.050 -0.009" rpy="0 0 0" />
+  </joint>
+
+  <joint name="propeller_rear_right_joint" type="fixed">
+    <parent link="link1" />
+    <child link="propeller_rear_right" />
+    <origin xyz="0.050 -0.050 -0.009" rpy="0 0 0" />
+  </joint>
+
+</robot>

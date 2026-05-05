@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot name="I_shape">
+  <!-- The main and only link of the robot (Vertical guide stick) -->
+  <link name="link1">
+    <!-- Inertial properties of the link, mass and inertia values are set to zero -->
+    <inertial>
+      <mass value="0" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+    <!-- Visual properties of the link -->
+    <visual>
+      <!-- Position and orientation of the visual frame, position adjusted along z-axis -->
+      <origin xyz="0 0 -.25" rpy="0 0 0" /> 
+      <!-- Geometry: 3mm x 3mm cross-section, 500mm length -->
+      <geometry>
+        <box size="0.003 0.003 0.50" />
+      </geometry>
+      <!-- Material properties for visualization, the link is colored green -->
+      <material name="green">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <!-- Collision properties of the link -->
+    <collision>
+      <!-- Position and orientation of the collision frame, position adjusted along z-axis -->
+      <origin xyz="0 0 -.25" rpy="0 0 0" />
+      <!-- Geometry: 3mm x 3mm cross-section, 500mm length -->
+      <geometry>
+        <box size="0.003 0.003 0.50" />
+      </geometry>
+    </collision>
+  </link>
+</robot>
